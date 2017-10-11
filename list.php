@@ -9,7 +9,6 @@
   mysql_select_db($db_database,$conn);
 
   $id = $_GET['id'];
-  $num = $_GET['num'];
 ?>
 
 <html>
@@ -69,7 +68,7 @@
       </div>
     </div>
   </div>
-  <div class="py-5">
+  <div class="py-2">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
@@ -86,7 +85,7 @@
               <th>Delete</th>
             </tr>
             <?php
-              $query = mysql_query("SELECT * FROM STUDENT where LOAN_TYPE = '$id'");
+              $query = mysql_query("SELECT * FROM STUDENT WHERE LOAN_TYPE = '$id'");
               while($result = mysql_fetch_object($query)){
                 echo '<tr><td><a rel="facebox" href="history.php?id='.$result->STUD_NUM.'&name='.$result->STUD_NAME.'&type='.$result->LOAN_TYPE.'">'.$result->STUD_NUM.'</a></td>';
                 echo '<td>'.$result->STUD_NAME.'</td>';

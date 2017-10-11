@@ -74,6 +74,7 @@
                 <th>Loan Type</th>
                 <th>Loan Maximum Amount</th>
                 <th>Requirements</th>
+                <th>Delete</th>
               </tr>
             </thead>
             <?php
@@ -82,10 +83,20 @@
               echo '<tr>';
               echo '<td><a rel="facebox" href="list.php?id='.$result->LOAN_TYPE.'">'.$result->LOAN_TYPE.'</a></td>';
               echo '<td>'.$result->LOAN_MAX.'</td>';
-              echo '<td>'.$result->LOAN_RQMT.'</td></tr>';
+              echo '<td>'.$result->LOAN_RQMT.'</td>';
+               echo '<td><a rel="facebox" href="delete_loan.php?type='.$result->LOAN_TYPE.'" onClick="return deleteconfig()">Delete</a></td></tr>';
             }
             ?>
 
+            <script>
+              function deleteconfig(){
+              var del = confirm('Are you sure you want to delete this?');
+              if(del==true)
+                alert ("Successfully Deleted!");
+              return del;
+            }
+            </script>
+            
           </table>
         </div>
       </div>

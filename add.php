@@ -9,7 +9,7 @@
 
 	mysql_select_db($db_database,$conn);
 	$id = $_GET['id'];
-	$flag = 0;
+
 
 	if($_POST['save']){
 		$nsname = $_POST['sname'];
@@ -24,35 +24,30 @@
         $ntype = $id;
         $nacadyr = $_POST['acadyr'];
         $nsem = $_POST['sem'];
-
         $namt_borrowed = $_POST['amt_borrowed'];
         $namt_paid = $_POST['amt_paid'];
         $ndate_paid = $_POST['date_paid'];
         $nor_num = $_POST['or_num'];
         $nreason = $_POST['reason'];
 
-        mysql_query("SELECT * FROM STUDENT where LOAN_TYPE = '$id'");
-		/*$query1 = mysql_query("SELECT * FROM STUDENT where LOAN_TYPE = '$id'");
-		while($result1 = mysql_fetch_object($query1)){
-			if($_POST['snum'] == $result1->STUD_NUM){
-				$flag = 1;
-			}
-		}*/
-		
-		//if($flag == 0){
-			mysql_query("INSERT INTO STUDENT (STUD_NAME, STUD_ADDRESS, STUD_COLLEGE, STUD_YEAR, STUD_COURSE, STUD_CONTACT, STUD_EMAIL, STUD_NUM, LOAN_TYPE, LOAN_YEAR, LOAN_SEM, LOAN_AMOUNT, REASON)
-			VALUES ('$nsname','$nadd', '$ncollege', $nyear, '$ncourse',$ncontact, '$nemail', '$nsnum', '$ntype',$nacadyr, '$nsem', $namt_borrowed, '$nreason')");
+        if(empty($namt_paid)){
+        	$namt_paid = 0;
+        }
+        if(empty($ndate_paid)){
+        	$ndate_paid = 0;
+        }
+        if(empty($nor_num)){
+        	$nor_num = 0;
+        }
 
-			mysql_query("INSERT INTO BAL_HIST (LOAN_TYPE, AMT_BORROWED, AMT_PAID, DATE_PAID, OR_NUM, STUD_NUM)
-			VALUES ('$ntype', $namt_borrowed, $namt_paid, '$ndate_paid', '$nor_num', '$nsnum')");
+		mysql_query("INSERT INTO STUDENT (STUD_NAME, STUD_ADDRESS, STUD_COLLEGE, STUD_YEAR, STUD_COURSE, STUD_CONTACT, STUD_EMAIL, STUD_NUM, LOAN_TYPE, LOAN_YEAR, LOAN_SEM, LOAN_AMOUNT, REASON)
+		VALUES ('$nsname','$nadd', '$ncollege', $nyear, '$ncourse', $ncontact, '$nemail', '$nsnum', '$ntype', $nacadyr, '$nsem', $namt_borrowed, '$nreason')");
 
-			echo "<script>alert('Added Successfully!');
-			location = 'list.php?id=$id&num=$nsnum';</script>";
-		/*}
-		else{
-			mysql_query("INSERT INTO BAL_HIST (LOAN_TYPE, AMT_BORROWED, AMT_PAID, DATE_PAID, OR_NUM, STUD_NUM)
-			VALUES ('$ntype', $namt_borrowed, $namt_paid, '$ndate_paid', '$nor_num', '$nsnum')");
-		}*/
+		mysql_query("INSERT INTO BAL_HIST (LOAN_TYPE, AMT_BORROWED, AMT_PAID, DATE_PAID, OR_NUM, STUD_NUM)
+		VALUES ('$ntype', $namt_borrowed, $namt_paid, '$ndate_paid', $nor_num, '$nsnum')");
+
+		echo "<script>alert('Added Successfully!');
+		location = 'list.php?id=$id';</script>";
 	}
 ?>
 
