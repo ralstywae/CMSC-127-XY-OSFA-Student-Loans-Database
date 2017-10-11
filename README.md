@@ -1,1 +1,10 @@
-# CMSC-127-XY-OSFA-Student-Loans-Database
+CMSC 127 XY: OSFA Database
+
+Members:
+
+CABILES
+CHAN
+JACOBE
+NATIVIDAD
+ORARA
+PERALTA
