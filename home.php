@@ -50,7 +50,8 @@
           <li class="nav-item">
             <a class="nav-link" href="search.php">Search</a>
           </li>
-          
+          <li class="navbar-item">
+            <a class="nav-link" href="payment.php">Payments</a>
         </ul>
       </div>
     </div>
@@ -81,7 +82,7 @@
             $query = mysql_query("SELECT * FROM LOAN_LIST");
             while($result = mysql_fetch_object($query)){
               echo '<tr>';
-              echo '<td><a rel="facebox" href="list.php?id='.$result->LOAN_TYPE.'">'.$result->LOAN_TYPE.'</a></td>';
+              echo '<td><a rel="facebox" href="list.php?type='.$result->LOAN_TYPE.'">'.$result->LOAN_TYPE.'</a></td>';
               echo '<td>'.$result->LOAN_MAX.'</td>';
               echo '<td>'.$result->LOAN_RQMT.'</td>';
                echo '<td><a rel="facebox" href="delete_loan.php?type='.$result->LOAN_TYPE.'" onClick="return deleteconfig()">Delete</a></td></tr>';

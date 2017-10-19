@@ -8,9 +8,10 @@
   $conn = mysql_connect($dbhost, $dbuser, $dbpass);
   mysql_select_db($db_database,$conn);
 
-  $num = $_GET['id'];
+  $num = $_GET['num'];
   $name = $_GET['name'];
   $type = $_GET['type'];
+  $out_bal = $_GET['out_bal'];
 ?>
 
 <html>
@@ -54,7 +55,9 @@
           <li class="nav-item">
             <a class="nav-link" href="search.php">Search</a>
           </li>
-          
+          <li class="nav-item">
+            <a class="nav-link" href="<?php echo 'payment.php?num='.$num.'&type='.$type.'' ?>">Payments</a>
+            </li>
         </ul>
       </div>
     </div>
@@ -83,6 +86,7 @@
                 <th>Amount Paid</th>
                 <th>Date Paid</th>
                 <th>O.R. No.</th>
+                <th>Outstanding Balance</th>
               </tr>
             </thead>
             <?php
@@ -93,7 +97,8 @@
               echo '<td>'.$result->AMT_BORROWED.'</td>';
               echo '<td>'.$result->AMT_PAID.'</td>';
               echo '<td>'.$result->DATE_PAID.'</td>';
-              echo '<td>'.$result->OR_NUM.'</td></tr>';
+              echo '<td>'.$result->OR_NUM.'</td>';
+              echo '<td>'.$out_bal.'</td></tr>';
             }
             ?>
 

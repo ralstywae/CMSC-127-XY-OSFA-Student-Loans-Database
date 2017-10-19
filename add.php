@@ -8,12 +8,13 @@
 	$conn = mysql_connect($dbhost, $dbuser, $dbpass);
 
 	mysql_select_db($db_database,$conn);
-	$id = $_GET['id'];
+	$type = $_GET['type'];
 
 
 	if($_POST['save']){
 		$nsname = $_POST['sname'];
         $nadd = $_POST['address'];
+        $nsex = $_POST['sex'];
         $ncollege = $_POST['college'];
         $nyear = $_POST['year'];
         $ncourse = $_POST['course'];
@@ -21,7 +22,7 @@
         $nemail = $_POST['email'];
         $nsnum = $_POST['snum'];
 
-        $ntype = $id;
+        $ntype = $type;
         $nacadyr = $_POST['acadyr'];
         $nsem = $_POST['sem'];
         $namt_borrowed = $_POST['amt_borrowed'];
@@ -40,14 +41,14 @@
         	$nor_num = 0;
         }
 
-		mysql_query("INSERT INTO STUDENT (STUD_NAME, STUD_ADDRESS, STUD_COLLEGE, STUD_YEAR, STUD_COURSE, STUD_CONTACT, STUD_EMAIL, STUD_NUM, LOAN_TYPE, LOAN_YEAR, LOAN_SEM, LOAN_AMOUNT, REASON)
-		VALUES ('$nsname','$nadd', '$ncollege', $nyear, '$ncourse', $ncontact, '$nemail', '$nsnum', '$ntype', $nacadyr, '$nsem', $namt_borrowed, '$nreason')");
+		mysql_query("INSERT INTO STUDENT (STUD_NAME, STUD_ADDRESS, STUD_SEX, STUD_COLLEGE, STUD_YEAR, STUD_COURSE, STUD_CONTACT, STUD_EMAIL, STUD_NUM, LOAN_TYPE, LOAN_YEAR, LOAN_SEM, LOAN_AMOUNT, REASON)
+		VALUES ('$nsname','$nadd', '$nsex', '$ncollege', $nyear, '$ncourse', $ncontact, '$nemail', '$nsnum', '$ntype', '$nacadyr', '$nsem', $namt_borrowed, '$nreason')");
 
 		mysql_query("INSERT INTO BAL_HIST (LOAN_TYPE, AMT_BORROWED, AMT_PAID, DATE_PAID, OR_NUM, STUD_NUM)
 		VALUES ('$ntype', $namt_borrowed, $namt_paid, '$ndate_paid', $nor_num, '$nsnum')");
 
 		echo "<script>alert('Added Successfully!');
-		location = 'list.php?id=$id';</script>";
+		location = 'list.php?type=$type';</script>";
 	}
 ?>
 
@@ -107,15 +108,24 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-           <?php echo '<h1>'.$id.'</h1>'; ?>
+           <?php echo '<h1>'.$type.'</h1>'; ?>
         </div>
       </div>
  <form class="form-signin" name="myForm" method="POST" enctype="multipart/form-data" name="addroom" onsubmit="return validateForm()">
       <div class="row"> <label for="example-search-input" class="col-2 col-form-label">Year of Application</label>
-        <div class="col-4 col-md-2">
-          <input class="form-control" name="acadyr"></div>
+         <div class="btn-group">
+          <select name="acadyr">
+				<option value="2015-2016">2015-2016</option>
+				<option value="2016-2017">2016-2017</option>
+				<option value="2017-2018">2017-2018</option>
+				<option value="2018-2019">2018-2019</option>
+				<option value="2019-2020">2019-2020</option>
+			</select>
+			</div>
         <div class="col-md-4">
+        <label for="example-search-input" class="col-4 col-form-label">Semester</label>
           <div class="btn-group">
+
             <select name="sem">
 				<option value="1st">1st Semester</option>
 				<option value="2nd">2nd Semester</option>
@@ -142,11 +152,27 @@
         <div class="col-10 col-md-6">
           <input class="form-control" id="snumber-input" name="course"> </div><label for="example-number-input" class="col-2 col-form-label">Year</label>
         <div class="col-10 col-md-2">
-          <input class="form-control" id="snumber-input" name="year"> </div>
+          <select name="year">
+              <option value=1>1st Year</option>
+              <option value=2>2nd Year</option>
+              <option value=3>3rd Year</option>
+              <option value=4>4th Year</option>
+            </select>
+            </div>
       </div>
-      <div class="form-group row"><label for="example-number-input" class="col-2 col-form-label">Mailing/Provincial Address</label>
-        <div class="col-10 col-md-10">
+
+       <div class="form-group row"><label for="example-number-input" class="col-2 col-form-label">Mailing/Provincial Address</label>
+        <div class="col-10 col-md-6">
           <input class="form-control" id="snumber-input" name="address"> </div>
+          <div class="col-md-4">
+           <label for="example-search-input" class="col-4 col-form-label">Sex</label>
+         	<div class="btn-group">
+          	<select name="sex">
+				<option value="Male">Male</option>
+				<option value="Female">Female</option>
+			</select>
+        	</div>
+        </div>
       </div>
       <div class="form-group row"><label for="example-number-input" class="col-2 col-form-label">E-mail Address</label>
         <div class="col-10 col-md-10">

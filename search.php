@@ -1,14 +1,19 @@
-<?php
-  session_start();
-  error_reporting(0);
-  $dbhost = 'localhost';
-  $dbuser = 'root';
-  $dbpass = '';
-  $db_database = 'osfa_db';
-  $conn = mysql_connect($dbhost, $dbuser, $dbpass);
-  mysql_select_db($db_database,$conn);
+<!DOCTYPE html>
 
-  $type = $_GET['type'];
+<?php
+  $servername = "localhost";
+  $username = "root";
+  $password = "";
+
+  // Create connection
+  $conn = new mysqli($servername, $username, $password);
+
+  // Check connection
+  if ($conn->connect_error)
+  {
+      die("Connection failed: " . $conn->connect_error);
+  } 
+  echo "Connected successfully";
 ?>
 
 <html>
@@ -52,11 +57,8 @@
           <li class="nav-item">
             <a class="nav-link" href="search.php">Search</a>
           </li>
-         <li class="nav-item">
-            <a class="nav-link" href="<?php echo 'add.php?type='.$type.''?>"><i class="fa d-inline fa-lg fa-user-circle-o"></i>&nbsp;Add Student loan</a>
-          </li>
           <li class="nav-item">
-          <a class="nav-link" href="payment.php">Payments</a>
+            <a class="nav-link" href="add.php"><i class="fa d-inline fa-lg fa-user-circle-o"></i>&nbsp;Add Student loan</a>
           </li>
         </ul>
       </div>
@@ -65,51 +67,26 @@
   <div class="py-5">
     <div class="container">
       <div class="row">
-        <div class="col-md-12">
-          <?php echo '<h1>'.$type.'</h1>'; ?>
+        <div class="col-md-2">
+          <div class="btn-group">
+            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> Categories </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Student Name</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Student Number</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Type of Loan</a>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <div class="py-2">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-20">
-          <table class="table">
-            <tr>
-              <th>Student Number</th>
-              <th>Student Name</th>
-              <th>Course</th>
-              <th>Year</th>
-              <th>Academic Year</th>
-              <th>Loan Amount</th>
-              <th>Payment</th>
-              <th>Edit</th>
-              <th>Delete</th>
-            </tr>
-            <?php
-              $query = mysql_query("SELECT * FROM STUDENT WHERE LOAN_TYPE = '$type'");
-              while($result = mysql_fetch_object($query)){
-                echo '<tr><td><a rel="facebox" href="history.php?num='.$result->STUD_NUM.'&name='.$result->STUD_NAME.'&type='.$result->LOAN_TYPE.'">'.$result->STUD_NUM.'</a></td>';
-                echo '<td>'.$result->STUD_NAME.'</td>';
-                echo '<td>'.$result->STUD_COURSE.'</td>';
-                echo '<td>'.$result->STUD_YEAR.'</td>';
-                echo '<td>'.$result->LOAN_YEAR.'</td>';
-                echo '<td>'.$result->LOAN_AMOUNT.'</td>';
-                echo '<td><a rel="facebox" href="payment.php?num='.$result->STUD_NUM.'&type='.$result->LOAN_TYPE.'">Pay</a></td>';
-                echo '<td><a rel="facebox" href="payment.php?num='.$result->STUD_NUM.'&type='.$result->LOAN_TYPE.'">Edit</a></td>';
-                echo '<td><a rel="facebox" href="delete.php?num='.$result->STUD_NUM.'&type='.$result->LOAN_TYPE.'" onClick="return deleteconfig()">Delete</a></td></tr>';
-              }
-            ?>
-            <script>
-              function deleteconfig(){
-              var del = confirm('Are you sure you want to delete this?');
-              if(del==true)
-                alert ("Successfully Deleted!");
-              return del;
-            }
-            </script>
-          </table>
+        <div class="col-md-6">
+          <div class="form-group row">
+            <div class="col-10 col-md-12">
+              <input class="form-control" type="search" id="search-input" placeholder="Search..."> </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <a class="btn btn-primary" href="">Enter</a>
         </div>
       </div>
     </div>
