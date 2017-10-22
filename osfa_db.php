@@ -33,10 +33,10 @@
 	)";
 	mysqli_query($conn, $query);
 	$query = "INSERT INTO LOAN_LIST VALUES
-		('IM Student Loan', 20000, 'RQMTS'),
+		('IM Student Loan', 20000, 'Graduate Student'),
 		('Safe Cash Loan', 5000, 'Accomplished Loan Form, Photocopied Form 5 &amp; UP ID'),
-		('Tuition Fee Loan', 10000, 'RQMTS'),
-		('Short Term Loan', 1500, 'RQMTS'),
+		('Tuition Fee Loan', 10000, 'Bonafide Student of UP Baguio without any outstanding amount &amp; \nPhotocopy of ID with signature of co-debtor and student'),
+		('Short Term Loan', 1500, 'Accomplished Loan Form, One 1 x 1 Picture, Photocopied Form 5 &amp; UP ID'),
 		('Radwill Loan', 5000, 'Accomplished Loan Form, Photocopied Form 5 &amp; UP ID'),
 		('UPAASV Loan', 5000, 'Accomplished Loan Form, Photocopied Form 5 &amp; UP ID')";
 	mysqli_query($conn, $query);
