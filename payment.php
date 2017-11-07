@@ -51,21 +51,25 @@
 		$nor_num = $_POST['or_num'];
 		$nreason = $_POST['reason'];
 
-		if(!empty($namt_paid))
+		if($namt_paid<$out_bal && !($namt_paid < 0))
 		{
 			//$namt_paid = $namt_paid + $namt_paid;
 			$out_bal = $out_bal - $namt_paid;
+			echo "<script>alert('Added Successfully!');
+			location = 'history.php?num=$num&name=$sname&out_bal=$out_bal&type=$type';</script>";
+		
+
+			mysqli_query($MyConnection, "UPDATE STUDENT SET OUT_BAL = $out_bal where (STUDENT.STUD_NUM = '$num' AND STUDENT.LOAN_TYPE = '$type' AND STUDENT.LOAN_YEAR = '$year' AND STUDENT.LOAN_SEM = '$sem')");
+
+			//mysql_query("UPDATE BAL_HIST SET OUT_BAL = 0 WHERE STUD_NUM = '$num' and LOAN_TYPE = '$type'");
+
+			mysqli_query($MyConnection, "INSERT INTO BAL_HIST (LOAN_TYPE, AMT_BORROWED, AMT_PAID, DATE_PAID, OR_NUM, OUT_BAL, STUD_NUM, LOAN_YEAR, LOAN_SEM)
+			VALUES ('$type', $amt_borrowed, $namt_paid, '$ndate_paid', $nor_num, $out_bal, '$snum', '$year', '$sem')");
+
 		}
-
-		mysqli_query($MyConnection, "UPDATE STUDENT SET OUT_BAL = $out_bal where (STUDENT.STUD_NUM = '$num' AND STUDENT.LOAN_TYPE = '$type' AND STUDENT.LOAN_YEAR = '$year' AND STUDENT.LOAN_SEM = '$sem')");
-
-		//mysql_query("UPDATE BAL_HIST SET OUT_BAL = 0 WHERE STUD_NUM = '$num' and LOAN_TYPE = '$type'");
-
-		mysqli_query($MyConnection, "INSERT INTO BAL_HIST (LOAN_TYPE, AMT_BORROWED, AMT_PAID, DATE_PAID, OR_NUM, OUT_BAL, STUD_NUM, LOAN_YEAR, LOAN_SEM)
-		VALUES ('$type', $amt_borrowed, $namt_paid, '$ndate_paid', $nor_num, $out_bal, '$snum', '$year', '$sem')");
-
-		echo "<script>alert('Added Successfully!');
-		location = 'history.php?num=$num&name=$sname&out_bal=$out_bal&type=$type';</script>";
+		else{
+			echo "<script>alert('ERROR: Amount paid is either less than 0 or greater than outstanding balance!');</script>";
+		}
 	}
 ?>
 
@@ -178,38 +182,10 @@
 		<div class="col-10 col-md-2">
 			<input class="form-control" id="snumber-input" name="amt_paid" required>
 		</div>
-
-      <label class="col-form-label col-2" for="date">Date Paid</label>
-       <div class="input-group col-10 col-md-2">
-        <div class="input-group-addon">
-         <i class="fa fa-calendar">
-         </i>
-        </div>
-        <input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" type="text">
-       </div>
-
-
-<!-- Extra JavaScript/CSS added manually in "Settings" tab -->
-<!-- Include jQuery -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-
-<!-- Include Date Range Picker -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
-
-<script>
-	$(document).ready(function(){
-		var date_input=$('input[name="date"]'); //our date input has the name "date"
-		var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-		date_input.datepicker({
-			format: 'mm/dd/yyyy',
-			container: container,
-			todayHighlight: true,
-			autoclose: true,
-		})
-	})
-</script>
-
+	<label for="example-number-input" class="col-2 col-form-label">Date Paid</label>
+		<div class="col-10 col-md-2">
+			<input class="form-control" id="snumber-input" name="date_paid" required> 
+		</div>
 	<label for="example-number-input" class="col-2 col-form-label">O.R. No.</label>
 		<div class="col-10 col-md-2">
 			<input class="form-control" id="snumber-input" name="or_num" required> 
@@ -225,18 +201,6 @@
 	<script src="scripts/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="scripts/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 	<script src="scripts/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
-	 <!--formden.js communicates with FormDen server to validate fields and submit via AJAX -->
-<script type="text/javascript" src="https://formden.com/static/cdn/formden.js"></script>
-
-<!-- Special version of Bootstrap that is isolated to content wrapped in .bootstrap-iso -->
-<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
-
-<!--Font Awesome (added because you use icons in your prepend/append)-->
-<link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
-
-<!-- Inline CSS based on choices in "Settings" tab -->
-<style>.bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: Arial, Helvetica, sans-serif; color: black}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: white !important;} .asteriskField{color: red;}</style>
-
 
 </body>
 </html>
