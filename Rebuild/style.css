@@ -1,0 +1,42 @@
+.py-5 form
+{
+	display: table;
+	margin: auto;
+}
+
+.py-5 button
+{
+	display: table;
+	margin: auto;
+}
+
+input[type = search]
+{
+	text-align: center;
+	display: table;
+	margin: auto;
+	width: 200px;
+	box-sizing: border-box;
+	border: 2px solid #ccc;
+	border-radius: 4px;
+	font-size: 20px;
+	background-color: white;
+	background-position: 10px 10px; 
+	background-repeat: no-repeat;
+	-webkit-transition: width 0.4s ease-in-out;
+	transition: width 0.4s ease-in-out;
+}
+
+input[type = search]:focus
+{	
+	display: table;
+	margin: auto;
+	width: 1000px;
+	text-align: left;
+}
+.py-5 select
+{
+	width: auto;
+	display: table;
+	margin: auto;
+}
