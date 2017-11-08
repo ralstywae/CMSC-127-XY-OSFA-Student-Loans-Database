@@ -51,7 +51,7 @@
 		$nor_num = $_POST['or_num'];
 		$nreason = $_POST['reason'];
 
-		if($namt_paid<$out_bal && !($namt_paid < 0))
+		if($namt_paid<=$out_bal && !($namt_paid < 0))
 		{
 			//$namt_paid = $namt_paid + $namt_paid;
 			$out_bal = $out_bal - $namt_paid;
